@@ -26,7 +26,7 @@ Json
 
 3- http://localhost:3800/api/createflight
 Json
-# landingTime y departureTime deben estar en formato date Unix
+#landingTime y departureTime deben estar en formato date Unix
 {
 	"from": {
         "city": "GDL",
