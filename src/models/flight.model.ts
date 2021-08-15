@@ -12,6 +12,8 @@ export interface Iflight extends Document {
         city: string,
         country: string,
     }; 
+    price: Number;
+    company: String;
     landingTime: Number;
     departureTime: Number;
     passengers: Schema.Types.ObjectId[] | IUser[];
@@ -27,6 +29,8 @@ const flightSchema: Schema  = new Schema({
         city: {type: String},
         country:{type: String}
     },
+    price:{type: Number, required: true},
+    company:{type: String, required: true},
     landingTime:{type: Number, required:true},
     departureTime:{type: Number, required:true},
     passengers: [{type: Schema.Types.ObjectId, ref:"User"}],

@@ -8,12 +8,14 @@ export const createFlight = async (req: Request, res: Response) =>{
     const infoUser = req.user as IUser;
 
     if(infoUser.role != 'ROLE_ADMIN') return res.status(401).json({message: 'User Unauthorized'});
-    const {from, to, landingTime, departureTime, limitPassager, passengers} = await req.body;
+    const {from, to, price, company, landingTime, departureTime, limitPassager, passengers} = await req.body;
 
     try{
         const flight = new Flight({
             from: from,
             to: to,
+            price: price,
+            company: company,
             landingTime: landingTime,
             departureTime: departureTime,
             limitPassager: limitPassager,
@@ -81,6 +83,37 @@ export const getFlights = (req: Request, res: Response) =>{
 }
 
 
+//Precio promedio de vuelos de una ciudad a otra
+export const getAvg = async (req: Request, res: Response) => {
+    let city = req.params.city;
+    let country = req.params.country;
+    let city2 = req.params.city2;
+    let country2 = req.params.country2;
+
+    try{
+        const comparison = await Flight.find({$and:[{from:{city:city, country:country }}, {to:{city:city2, country:country2}} ]});
+        var total: any = 0;
+        for (let i = 0; i < comparison.length; i++) {
+            total += comparison[i].price; 
+        }
+
+        const average = await total/comparison.length;
+        res.status(200).json({comparison, average});
+    }catch(err){
+        return res.status(500).json({message: err});
+    }
+}
 
 
+//Comparacion de precios y caracteristicas de 2 compañias aereas en un vuelo de una ciudad a otra
+export const comparisonCompanies = async (req: Request, res: Response) => {
+    let { company, company2, city, country, city2, country2 } = req.params;
 
+    try{
+        const comparison = await Flight.find({$and:[{from:{city:city, country:country }}, {to:{city:city2, country:country2}}, {$or:[{company: company}, {company: company2}]} ]});
+        res.status(200).json({comparison});
+
+    }catch(err){
+        return res.status(500).json({message: err});
+    }
+}
