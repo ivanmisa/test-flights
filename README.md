@@ -71,8 +71,11 @@ Json
 9- http://localhost:3800/api/getlastbaggage/1
 #usuario con token y role de admin
 
+10-  http://localhost:3800/api/getavg/MX/GDL/USA/NW  
+#Presio promedio de todos los vuelos de una ciudad en espesifico a otra
 
-
+11- http://localhost:3800/api/getcomparison/aeromexico/aeroaa/MX/GDL/USA/NW
+Comparacion de presios y otras caracteristicas de 2 compañias aereas diferentes que van de una ciudad en especifico a otra
 
 
 
